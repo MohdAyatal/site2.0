@@ -23,6 +23,9 @@
 -->
 <html lang="en">
 <head>
+  <!-- AOS - Animate On Scroll Library -->
+<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -169,6 +172,13 @@
 <!-- ═══ STYLES ═══ -->
 <link rel="stylesheet" href="/assets/css/style.css">
 </head>
+  <script>
+  AOS.init({
+    duration: 800,
+    easing: 'slide',
+    once: true
+  });
+</script>
 <body>
 
 <!-- SKIP NAV (Accessibility) -->
