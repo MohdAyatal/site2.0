@@ -437,3 +437,40 @@ function switchPPTab(tab, btn){
   const content = document.getElementById('pp-tab-'+tab);
   if(content) content.classList.add('active');
 }
+// ── ENHANCED GALLERY WITH VIDEO SUPPORT ──
+function initProductGallery(pid) {
+  ppGalleryActive[pid] = 0;
+  
+  // Update the switchProductImage function to handle videos
+  const originalSwitch = window.switchProductImage;
+  window.switchProductImage = function(pid, idx, src, thumb) {
+    ppGalleryActive[pid] = idx;
+    const mainMedia = document.getElementById('ppMainImg_' + pid);
+    
+    if (!mainMedia) return;
+    
+    if (src && src.startsWith('video:')) {
+      const videoUrl = src.substring(6);
+      mainMedia.innerHTML = `
+        <video controls autoplay muted loop playsinline 
+               style="width:100%;height:100%;object-fit:contain;background:#000;">
+          <source src="${videoUrl}" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      `;
+    } else {
+      mainMedia.src = src;
+      mainMedia.style.opacity = '0.6';
+      setTimeout(() => { mainMedia.style.opacity = '1'; }, 300);
+    }
+    
+    // Update thumbnail active state
+    document.querySelectorAll(`#ppThumbs_${pid} .pp-thumb`).forEach(t => t.classList.remove('active'));
+    if (thumb) thumb.classList.add('active');
+  };
+  
+  // Restore original function when needed
+  window.switchProductImage.restore = () => {
+    window.switchProductImage = originalSwitch;
+  };
+}
