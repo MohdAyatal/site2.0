@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<!--
+═══════════════════════════════════════════════════════════════════
+  WHOLESALE BAAZAR — index.html (shell only)
+  All logic is split into separate files under assets/
+  ─────────────────────────────────────────────────────────────────
+  assets/css/style.css   → All CSS
+  assets/js/data.js      → Products + slideshow data
+  assets/js/reviews.js   → Star ratings + review system
+  assets/js/cart.js      → Cart, wishlist, checkout, tracker
+  assets/js/chat.js      → AI chatbot
+  assets/js/admin.js     → Admin panel
+  assets/js/app.js       → Nav, products, quickview, auth, init
+  ─────────────────────────────────────────────────────────────────
+  SETUP CHECKLIST (before going live):
+  1. GA4 ID        → Search "G-XXXXXXXXXX" → replace with real ID
+  2. Razorpay Key  → Edit RAZORPAY_KEY in assets/js/app.js
+  3. EmailJS       → Edit EMAILJS_* constants in assets/js/app.js
+  4. Firebase      → Edit FIREBASE_CONFIG in assets/js/app.js
+  5. Admin login   → Default admin/admin123 — change via Admin Panel
+  6. Admin access  → Press Ctrl+Shift+A on the site
+═══════════════════════════════════════════════════════════════════
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ═══ SEO ═══ -->
+<title>Wholesale Baazar – Fashion Marketplace | Men, Women & Kids</title>
+<meta name="description" content="Wholesale Baazar – India's trusted manufacturer and wholesale supplier of premium Men's, Women's & Kids' fashion. Shop 50+ products. Fast delivery across India. COD available.">
+<meta name="keywords" content="wholesale baazar, fashion wholesale india, men's clothing, women's clothing, kids clothing, wholesale supplier, manufacturer india, bulk fashion, wholesale kurta supplier, bulk kids wear manufacturer">
+<meta name="author" content="Wholesale Baazar">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#FF9900">
+<link rel="canonical" href="https://wholesalebaazar.in/">
+
+<!-- ═══ OPEN GRAPH ═══ -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wholesalebaazar.in/">
+<meta property="og:title" content="Wholesale Baazar – Fashion Marketplace">
+<meta property="og:description" content="India's trusted manufacturer & wholesale supplier. Men, Women & Kids collections. COD available. Fast delivery.">
+<meta property="og:image" content="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=80">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_IN">
+<meta property="og:site_name" content="Wholesale Baazar">
+
+<!-- ═══ TWITTER CARD ═══ -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Wholesale Baazar – Fashion Marketplace">
+<meta name="twitter:description" content="India's trusted manufacturer & wholesale supplier. Men, Women & Kids collections.">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=80">
+
+<!-- ═══ SECURITY ═══ -->
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+
+<!-- ═══ PWA ═══ -->
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Wholesale Baazar">
+<link rel="manifest" href="/manifest.json">
+<link rel="sitemap" type="application/xml" href="/sitemap.xml">
+
+<!-- ═══ FAVICON ═══ -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛍</text></svg>">
+
+<!-- ═══ JSON-LD STRUCTURED DATA ═══ -->
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Wholesale Baazar",
+    "alternateName": "Wholesale Bazaar",
+    "description": "India's trusted manufacturer and wholesale supplier of premium Men's, Women's and Kids' fashion.",
+    "url": "https://wholesalebaazar.in",
+    "logo": { "@type": "ImageObject", "url": "https://wholesalebaazar.in/logo.png", "width": 200, "height": 60 },
+    "telephone": "+91-8840130533",
+    "email": "wholesalebazaar.support@gmail.com",
+    "foundingDate": "2015",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Ground Floor, Anwar Market, Jhunsi",
+      "addressLocality": "Prayagraj",
+      "addressRegion": "Uttar Pradesh",
+      "postalCode": "211019",
+      "addressCountry": "IN"
+    },
+    "openingHoursSpecification": [{
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+      "opens": "09:00", "closes": "20:00"
+    }],
+    "sameAs": ["https://instagram.com/wholesalebaazar","https://facebook.com/wholesalebaazar","https://wa.me/918840130533"],
+    "contactPoint": [{
+      "@type": "ContactPoint",
+      "telephone": "+91-8840130533",
+      "contactType": "customer service",
+      "areaServed": "IN",
+      "availableLanguage": ["Hindi","English"]
+    }]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Wholesale Baazar",
+    "url": "https://wholesalebaazar.in",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": { "@type": "EntryPoint", "urlTemplate": "https://wholesalebaazar.in/?search={search_term_string}" },
+      "query-input": "required name=search_term_string"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Store",
+    "name": "Wholesale Baazar",
+    "url": "https://wholesalebaazar.in",
+    "telephone": "+91-8840130533",
+    "email": "wholesalebazaar.support@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Ground Floor, Anwar Market, Jhunsi",
+      "addressLocality": "Prayagraj",
+      "addressRegion": "Uttar Pradesh",
+      "addressCountry": "IN"
+    },
+    "currenciesAccepted": "INR",
+    "paymentAccepted": "Cash on Delivery, Online Payment",
+    "priceRange": "₹299 - ₹4999"
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type":"Question","name":"What is the minimum order quantity (MOQ) at Wholesale Baazar?","acceptedAnswer":{"@type":"Answer","text":"Minimum order quantity starts at 10 pieces per style. For bulk orders above 50 pieces, contact us for special pricing at +91 8840130533."}},
+      {"@type":"Question","name":"Does Wholesale Baazar offer Cash on Delivery?","acceptedAnswer":{"@type":"Answer","text":"Yes, we offer Cash on Delivery (COD) across India. We also accept online payments via Razorpay including UPI, credit/debit cards and net banking."}},
+      {"@type":"Question","name":"How long does delivery take?","acceptedAnswer":{"@type":"Answer","text":"Standard delivery takes 3–5 business days. Metro cities typically receive orders in 2–3 days. Free shipping on orders above ₹999."}},
+      {"@type":"Question","name":"Do you provide GST invoices for B2B wholesale orders?","acceptedAnswer":{"@type":"Answer","text":"Yes, GST invoices are available for all B2B orders. Share your GSTIN when placing the order."}},
+      {"@type":"Question","name":"What is the return policy?","acceptedAnswer":{"@type":"Answer","text":"We offer 7-day hassle-free returns from delivery date. Items must be unused and in original packaging. Contact us via WhatsApp at +91 8840130533."}}
+    ]
+  }
+]
+</script>
+
+<!-- ═══ GOOGLE ANALYTICS GA4 ═══ -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX', { anonymize_ip: true });
+</script>
+
+<!-- ═══ FONTS ═══ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<!-- ═══ THIRD-PARTY SCRIPTS ═══ -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+
+<!-- ═══ STYLES ═══ -->
+<link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+
+<!-- SKIP NAV (Accessibility) -->
+<a href="#mainContent" class="skip-nav">Skip to main content</a>
+
+<!-- ═══ COOKIE CONSENT ═══ -->
+<div class="cookie-overlay" id="cookieOverlay" onclick="handleCookieOverlayClick(event)"></div>
+<div class="cookie-banner" id="cookieBanner" role="dialog" aria-modal="true" aria-labelledby="cookieTitle">
+  <div class="cookie-top">
+    <div class="cookie-icon">🍪</div>
+    <div>
+      <h3 id="cookieTitle">We value your privacy</h3>
+      <p>Wholesale Baazar · wholesalebaazar.in</p>
+    </div>
+  </div>
+  <div class="cookie-body">
+    We use cookies to enhance your browsing experience, remember your cart &amp; wishlist, and understand how visitors use our site.
+    Read our <a onclick="openPolicy('privacy')">Privacy Policy</a> and <a onclick="openPolicy('terms')">Terms of Service</a> for full details.
+  </div>
+  <div class="cookie-toggles">
+    <div class="cookie-toggle-row">
+      <div><div class="cookie-toggle-label">✅ Essential Cookies</div><div class="cookie-toggle-sub">Cart, wishlist, login — required for the site to work</div></div>
+      <label class="toggle-switch"><input type="checkbox" checked disabled><span class="toggle-slider"></span></label>
+    </div>
+    <div class="cookie-toggle-row">
+      <div><div class="cookie-toggle-label">📊 Analytics Cookies</div><div class="cookie-toggle-sub">Google Analytics — helps us improve the site</div></div>
+      <label class="toggle-switch"><input type="checkbox" id="toggleAnalytics" checked><span class="toggle-slider"></span></label>
+    </div>
+    <div class="cookie-toggle-row">
+      <div><div class="cookie-toggle-label">🎯 Marketing Cookies</div><div class="cookie-toggle-sub">Meta Pixel — helps show relevant ads</div></div>
+      <label class="toggle-switch"><input type="checkbox" id="toggleMarketing" checked><span class="toggle-slider"></span></label>
+    </div>
+  </div>
+  <div class="cookie-btns">
+    <button class="cookie-decline" onclick="handleCookie(false)">Reject All</button>
+    <button class="cookie-accept" onclick="handleCookie(true)">Accept All ✓</button>
+  </div>
+  <button class="cookie-manage" onclick="handleCookieCustom()">Save my preferences</button>
+</div>
+
+<!-- ═══ NAV ═══ -->
+<nav id="mainNav">
+  <div class="nav-logo-wrap" onclick="goHome()" style="flex-direction:row;align-items:center;gap:.5rem;">
+    <img src="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 160 50%22><rect width=%22160%22 height=%2250%22 fill=%22%23FF9900%22 rx=%224%22/><text x=%228%22 y=%2234%22 font-family=%22Georgia,serif%22 font-size=%2224%22 font-weight=%22bold%22 fill=%22%23000%22>WB</text><text x=%2240%22 y=%2234%22 font-family=%22Georgia,serif%22 font-size=%2218%22 fill=%22%23000%22>Baazar</text></svg>" alt="Wholesale Baazar" style="height:44px;width:auto;object-fit:contain;display:block;" loading="eager">
+  </div>
+  <div class="nav-sections">
+    <button class="nav-section-btn" data-s="men"         onclick="switchSection('men')">Men</button>
+    <button class="nav-section-btn" data-s="women"       onclick="switchSection('women')">Women</button>
+    <button class="nav-section-btn" data-s="kids"        onclick="switchSection('kids')">Kids</button>
+    <button class="nav-section-btn" data-s="homekitchen" onclick="switchSection('homekitchen')">Home & Kitchen</button>
+    <button class="nav-section-btn" data-s="supplements" onclick="switchSection('supplements')">Supplements</button>
+    <button class="nav-section-btn" data-s="contact"     onclick="switchSection('contact')">Contact</button>
+  </div>
+  <div class="nav-right">
+    <div class="hamburger-menu" onclick="toggleMobileMenu(this)">
+      <div class="bar1"></div><div class="bar2"></div><div class="bar3"></div>
+    </div>
+    <button class="nav-icon-btn admin-only" title="Admin" onclick="openAdmin()">⚙</button>
+    <div class="nav-user-wrap" id="navUserWrap" style="display:none">
+      <button class="nav-user-btn" id="navUserBtn" onclick="toggleUserDropdown()" title="My Account">
+        <div class="nav-user-avatar" id="navUserAvatar">👤</div>
+        <span id="navUserLabel"></span>
+      </button>
+      <div class="user-dropdown" id="userDropdown">
+        <div class="user-dropdown-header">
+          <div class="user-dropdown-name" id="dropdownName">Guest</div>
+          <div class="user-dropdown-email" id="dropdownEmail">Not signed in</div>
+        </div>
+        <button class="user-dropdown-item" onclick="goToOrders()">🛒 My Orders</button>
+        <button class="user-dropdown-item" onclick="openUserModal()">👤 My Profile</button>
+        <button class="user-dropdown-item danger" onclick="userLogout()">🚪 Logout</button>
+      </div>
+    </div>
+    <button class="nav-icon-btn" title="Wishlist" onclick="toggleWishlist()">
+      ♡<span class="cart-count" id="wishlistCount">0</span>
+    </button>
+    <button class="nav-icon-btn" title="Cart" onclick="toggleCart()">
+      🛍<span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu" style="display:none">
+  <a onclick="switchSection('men')">Men</a>
+  <a onclick="switchSection('women')">Women</a>
+  <a onclick="switchSection('kids')">Kids</a>
+  <a onclick="switchSection('homekitchen')">Home & Kitchen</a>
+  <a onclick="switchSection('supplements')">Supplements</a>
+  <a onclick="switchSection('contact')">Contact Us</a>
+  <a id="mobileOrdersLink" style="display:none;color:var(--accent)" onclick="closeMobileMenu();openTrackModal()">🛒 My Orders</a>
+  <a id="mobileLogoutLink" style="display:none;color:#e04" onclick="userLogout();closeMobileMenu()">🚪 Logout</a>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section id="heroSection" class="hero" role="banner">
+  <div class="slideshow-track" id="slideshowTrack"></div>
+  <div class="hero-overlay"></div>
+  <button class="slide-arrow slide-prev" onclick="prevSlide()">&#8592;</button>
+  <button class="slide-arrow slide-next" onclick="nextSlide()">&#8594;</button>
+  <div class="slide-dots" id="slideDots"></div>
+  <div class="hero-content" id="mainContent">
+    <p class="hero-eyebrow">Spring / Summer 2026</p>
+    <h1 class="hero-title">Shop to<br><em>Inspire.</em></h1>
+    <p class="hero-sub">Fashion, home essentials &amp; wellness — five distinct worlds, one house of style.</p>
+    <div class="hero-cards">
+      <div class="hero-card" onclick="switchSection('men')">MEN<small id="hc_men"></small></div>
+      <div class="hero-card" onclick="switchSection('women')">WOMEN<small id="hc_women"></small></div>
+      <div class="hero-card" onclick="switchSection('kids')">KIDS<small id="hc_kids"></small></div>
+      <div class="hero-card" onclick="switchSection('homekitchen')">HOME & KITCHEN<small id="hc_homekitchen"></small></div>
+      <div class="hero-card" onclick="switchSection('supplements')">SUPPLEMENTS<small id="hc_supplements"></small></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ MEN ═══ -->
+<div id="menSection" class="section-page">
+  <div class="section-header">
+    <div class="section-header-top">
+      <div><p class="section-tag">Wholesale Baazar / Men</p><h2 class="section-title">Men's Collection</h2></div>
+      <div class="section-controls">
+        <input class="search-input" placeholder="Search…" oninput="filterProducts('men',this.value)">
+        <select class="filter-select" id="catFilter_men" onchange="filterByCategory('men',this.value)"></select>
+        <select class="filter-select" onchange="sortProducts('men',this.value)">
+          <option value="">Sort</option><option value="asc">Price ↑</option><option value="desc">Price ↓</option><option value="name">A–Z</option>
+        </select>
+        <input class="filter-select" type="number" id="minPrice_men" placeholder="Min ₹" style="width:80px" oninput="filterByPrice('men')">
+        <input class="filter-select" type="number" id="maxPrice_men" placeholder="Max ₹" style="width:80px" oninput="filterByPrice('men')">
+      </div>
+    </div>
+  </div>
+  <div class="subcat-nav" id="subcatNav_men">
+    <button class="subcat-pill active" onclick="filterBySubcat('men','all',this)"><span class="pill-icon">🏠</span>All</button>
+    <button class="subcat-pill" onclick="filterBySubcat('men','shoes',this)"><span class="pill-icon">👟</span>Shoes</button>
+    <button class="subcat-pill" onclick="filterBySubcat('men','gymwear',this)"><span class="pill-icon">🏋️</span>Gym Wear</button>
+    <button class="subcat-pill" onclick="filterBySubcat('men','partywear',this)"><span class="pill-icon">🎉</span>Party Wear</button>
+    <button class="subcat-pill" onclick="filterBySubcat('men','hygiene',this)"><span class="pill-icon">🧴</span>Mens Hygiene</button>
+    <button class="subcat-pill" onclick="filterBySubcat('men','casual',this)"><span class="pill-icon">👕</span>Casual</button>
+    <button class="subcat-pill" onclick="filterBySubcat('men','wearables',this)"><span class="pill-icon">⌚</span>Wearables</button>
+  </div>
+  <div class="product-grid" id="menGrid"></div>
+</div>
+
+<!-- ═══ WOMEN ═══ -->
+<div id="womenSection" class="section-page">
+  <div class="section-header">
+    <div class="section-header-top">
+      <div><p class="section-tag">Wholesale Baazar / Women</p><h2 class="section-title">Women's Collection</h2></div>
+      <div class="section-controls">
+        <input class="search-input" placeholder="Search…" oninput="filterProducts('women',this.value)">
+        <select class="filter-select" id="catFilter_women" onchange="filterByCategory('women',this.value)"></select>
+        <select class="filter-select" onchange="sortProducts('women',this.value)">
+          <option value="">Sort</option><option value="asc">Price ↑</option><option value="desc">Price ↓</option><option value="name">A–Z</option>
+        </select>
+        <input class="filter-select" type="number" id="minPrice_women" placeholder="Min ₹" style="width:80px" oninput="filterByPrice('women')">
+        <input class="filter-select" type="number" id="maxPrice_women" placeholder="Max ₹" style="width:80px" oninput="filterByPrice('women')">
+      </div>
+    </div>
+  </div>
+  <div class="subcat-nav" id="subcatNav_women">
+    <button class="subcat-pill active" onclick="filterBySubcat('women','all',this)"><span class="pill-icon">🏠</span>All</button>
+    <button class="subcat-pill" onclick="filterBySubcat('women','cosmetics',this)"><span class="pill-icon">✨</span>Cosmetics</button>
+    <button class="subcat-pill" onclick="filterBySubcat('women','shoes',this)"><span class="pill-icon">👠</span>Shoes</button>
+    <button class="subcat-pill" onclick="filterBySubcat('women','hygiene',this)"><span class="pill-icon">🧴</span>Hygiene</button>
+    <button class="subcat-pill" onclick="filterBySubcat('women','makeup',this)"><span class="pill-icon">💄</span>Makeup</button>
+    <button class="subcat-pill" onclick="filterBySubcat('women','wearables',this)"><span class="pill-icon">⌚</span>Wearables</button>
+    <button class="subcat-pill" onclick="filterBySubcat('women','clothes',this)"><span class="pill-icon">👗</span>Clothes</button>
+    <button class="subcat-pill" onclick="filterBySubcat('women','partywear',this)"><span class="pill-icon">🎉</span>Party Wear</button>
+    <button class="subcat-pill" onclick="filterBySubcat('women','casual',this)"><span class="pill-icon">👕</span>Casual</button>
+    <button class="subcat-pill" onclick="filterBySubcat('women','gymwear',this)"><span class="pill-icon">🏋️</span>Gym Wear</button>
+  </div>
+  <div class="product-grid" id="womenGrid"></div>
+</div>
+
+<!-- ═══ KIDS ═══ -->
+<div id="kidsSection" class="section-page">
+  <div class="section-header">
+    <div class="section-header-top">
+      <div><p class="section-tag">Wholesale Baazar / Kids</p><h2 class="section-title">Kids' Collection</h2></div>
+      <div class="section-controls">
+        <input class="search-input" placeholder="Search…" oninput="filterProducts('kids',this.value)">
+        <select class="filter-select" id="catFilter_kids" onchange="filterByCategory('kids',this.value)"></select>
+        <select class="filter-select" onchange="sortProducts('kids',this.value)">
+          <option value="">Sort</option><option value="asc">Price ↑</option><option value="desc">Price ↓</option><option value="name">A–Z</option>
+        </select>
+        <input class="filter-select" type="number" id="minPrice_kids" placeholder="Min ₹" style="width:80px" oninput="filterByPrice('kids')">
+        <input class="filter-select" type="number" id="maxPrice_kids" placeholder="Max ₹" style="width:80px" oninput="filterByPrice('kids')">
+      </div>
+    </div>
+  </div>
+  <div class="subcat-nav" id="subcatNav_kids">
+    <button class="subcat-pill active" onclick="filterBySubcat('kids','all',this)"><span class="pill-icon">🏠</span>All</button>
+    <button class="subcat-pill" onclick="filterBySubcat('kids','shoes',this)"><span class="pill-icon">👟</span>Shoes</button>
+    <button class="subcat-pill" onclick="filterBySubcat('kids','wearables',this)"><span class="pill-icon">⌚</span>Wearables</button>
+    <button class="subcat-pill" onclick="filterBySubcat('kids','casual',this)"><span class="pill-icon">👕</span>Casual</button>
+    <button class="subcat-pill" onclick="filterBySubcat('kids','partywear',this)"><span class="pill-icon">🎉</span>Party Wear</button>
+    <button class="subcat-pill" onclick="filterBySubcat('kids','schoolsupplies',this)"><span class="pill-icon">🎒</span>School Supplies</button>
+  </div>
+  <div class="product-grid" id="kidsGrid"></div>
+</div>
+
+<!-- ═══ HOME & KITCHEN ═══ -->
+<div id="homekitchenSection" class="section-page">
+  <div class="section-header">
+    <div class="section-header-top">
+      <div><p class="section-tag">Wholesale Baazar / Home & Kitchen</p><h2 class="section-title">Home & Kitchen</h2></div>
+      <div class="section-controls">
+        <input class="search-input" placeholder="Search…" oninput="filterProducts('homekitchen',this.value)">
+        <select class="filter-select" id="catFilter_homekitchen" onchange="filterByCategory('homekitchen',this.value)"></select>
+        <select class="filter-select" onchange="sortProducts('homekitchen',this.value)">
+          <option value="">Sort</option><option value="asc">Price ↑</option><option value="desc">Price ↓</option><option value="name">A–Z</option>
+        </select>
+        <input class="filter-select" type="number" id="minPrice_homekitchen" placeholder="Min ₹" style="width:80px" oninput="filterByPrice('homekitchen')">
+        <input class="filter-select" type="number" id="maxPrice_homekitchen" placeholder="Max ₹" style="width:80px" oninput="filterByPrice('homekitchen')">
+      </div>
+    </div>
+  </div>
+  <div class="subcat-nav" id="subcatNav_homekitchen">
+    <button class="subcat-pill active" onclick="filterBySubcat('homekitchen','all',this)"><span class="pill-icon">🏠</span>All</button>
+    <button class="subcat-pill" onclick="filterBySubcat('homekitchen','cookware',this)"><span class="pill-icon">🍳</span>Cookware</button>
+    <button class="subcat-pill" onclick="filterBySubcat('homekitchen','storage',this)"><span class="pill-icon">📦</span>Storage</button>
+    <button class="subcat-pill" onclick="filterBySubcat('homekitchen','bedding',this)"><span class="pill-icon">🛏️</span>Bedding</button>
+    <button class="subcat-pill" onclick="filterBySubcat('homekitchen','cleaning',this)"><span class="pill-icon">🧹</span>Cleaning</button>
+    <button class="subcat-pill" onclick="filterBySubcat('homekitchen','decor',this)"><span class="pill-icon">🪴</span>Decor</button>
+    <button class="subcat-pill" onclick="filterBySubcat('homekitchen','appliances',this)"><span class="pill-icon">🔌</span>Appliances</button>
+  </div>
+  <div class="product-grid" id="homekitchenGrid"></div>
+</div>
+
+<!-- ═══ SUPPLEMENTS ═══ -->
+<div id="supplementsSection" class="section-page">
+  <div class="section-header">
+    <div class="section-header-top">
+      <div><p class="section-tag">Wholesale Baazar / Supplements</p><h2 class="section-title">Supplements</h2></div>
+      <div class="section-controls">
+        <input class="search-input" placeholder="Search…" oninput="filterProducts('supplements',this.value)">
+        <select class="filter-select" id="catFilter_supplements" onchange="filterByCategory('supplements',this.value)"></select>
+        <select class="filter-select" onchange="sortProducts('supplements',this.value)">
+          <option value="">Sort</option><option value="asc">Price ↑</option><option value="desc">Price ↓</option><option value="name">A–Z</option>
+        </select>
+        <input class="filter-select" type="number" id="minPrice_supplements" placeholder="Min ₹" style="width:80px" oninput="filterByPrice('supplements')">
+        <input class="filter-select" type="number" id="maxPrice_supplements" placeholder="Max ₹" style="width:80px" oninput="filterByPrice('supplements')">
+      </div>
+    </div>
+  </div>
+  <div class="subcat-nav" id="subcatNav_supplements">
+    <button class="subcat-pill active" onclick="filterBySubcat('supplements','all',this)"><span class="pill-icon">🏠</span>All</button>
+    <button class="subcat-pill" onclick="filterBySubcat('supplements','protein',this)"><span class="pill-icon">💪</span>Protein</button>
+    <button class="subcat-pill" onclick="filterBySubcat('supplements','vitamins',this)"><span class="pill-icon">💊</span>Vitamins</button>
+    <button class="subcat-pill" onclick="filterBySubcat('supplements','preworkout',this)"><span class="pill-icon">⚡</span>Pre-Workout</button>
+    <button class="subcat-pill" onclick="filterBySubcat('supplements','weightloss',this)"><span class="pill-icon">🔥</span>Weight Loss</button>
+    <button class="subcat-pill" onclick="filterBySubcat('supplements','ayurvedic',this)"><span class="pill-icon">🌿</span>Ayurvedic</button>
+    <button class="subcat-pill" onclick="filterBySubcat('supplements','sports',this)"><span class="pill-icon">🏅</span>Sports Nutrition</button>
+  </div>
+  <div class="product-grid" id="supplementsGrid"></div>
+</div>
+
+<!-- ═══ CONTACT ═══ -->
+<div id="contactSection" class="section-page">
+  <div class="section-header">
+    <div class="section-header-top">
+      <div><p class="section-tag">Wholesale Baazar / Contact</p><h2 class="section-title">Get In Touch</h2></div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.2rem;margin-bottom:3rem;">
+    <div style="background:var(--surface);border:1px solid var(--border);padding:1.8rem 1.4rem;text-align:center;">
+      <div style="font-size:1.8rem;margin-bottom:.7rem;">📞</div>
+      <div style="font-size:.68rem;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:.4rem;">Phone / WhatsApp</div>
+      <a href="https://wa.me/918840130533" target="_blank" rel="noopener" style="font-size:.95rem;font-weight:600;color:var(--text);">+91 88401 30533</a>
+      <div style="font-size:.75rem;color:var(--muted);margin-top:.3rem;">Mon–Sat · 9 AM – 8 PM</div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);padding:1.8rem 1.4rem;text-align:center;">
+      <div style="font-size:1.8rem;margin-bottom:.7rem;">📧</div>
+      <div style="font-size:.68rem;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:.4rem;">Email</div>
+      <a href="mailto:wholesalebazaar.support@gmail.com" style="font-size:.88rem;font-weight:600;color:var(--text);word-break:break-all;">wholesalebazaar.support@gmail.com</a>
+      <div style="font-size:.75rem;color:var(--muted);margin-top:.3rem;">Reply within 24 hours</div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);padding:1.8rem 1.4rem;text-align:center;">
+      <div style="font-size:1.8rem;margin-bottom:.7rem;">📍</div>
+      <div style="font-size:.68rem;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:.4rem;">Visit Us</div>
+      <div style="font-size:.88rem;font-weight:600;color:var(--text);line-height:1.5;">Ground Floor, Anwar Market<br>Jhunsi, Prayagraj</div>
+      <div style="font-size:.75rem;color:var(--muted);margin-top:.3rem;">Uttar Pradesh, India</div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);padding:1.8rem 1.4rem;text-align:center;">
+      <div style="font-size:1.8rem;margin-bottom:.7rem;">🕘</div>
+      <div style="font-size:.68rem;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:.4rem;">Store Hours</div>
+      <div style="font-size:.88rem;font-weight:600;color:var(--text);">Mon – Sat</div>
+      <div style="font-size:.88rem;color:var(--text);">9:00 AM – 8:00 PM</div>
+      <div style="font-size:.75rem;color:var(--muted);margin-top:.3rem;">Sunday: Closed</div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;">
+    <div>
+      <p class="section-tag" style="margin-bottom:1rem;">Send Us a Message</p>
+      <form id="contactForm" onsubmit="submitContactForm(event)" style="display:flex;flex-direction:column;gap:1rem;">
+        <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+          <div>
+            <label style="font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.4rem;">Your Name *</label>
+            <input class="form-input" type="text" id="cf_name" name="from_name" placeholder="Rahul Sharma" required style="width:100%;">
+          </div>
+          <div>
+            <label style="font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.4rem;">WhatsApp / Phone *</label>
+            <input class="form-input" type="tel" id="cf_phone" name="phone" placeholder="+91 9876543210" required style="width:100%;">
+          </div>
+        </div>
+        <div>
+          <label style="font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.4rem;">Email Address *</label>
+          <input class="form-input" type="email" id="cf_email" name="reply_to" placeholder="rahul@yourbusiness.com" required style="width:100%;">
+        </div>
+        <div>
+          <label style="font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.4rem;">Subject</label>
+          <select class="filter-select" name="subject" style="width:100%;">
+            <option>Bulk / Wholesale Order</option><option>Product Enquiry</option><option>Return / Refund</option><option>Delivery Issue</option><option>Other</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.4rem;">Your Message *</label>
+          <textarea class="form-input" id="cf_message" name="message" placeholder="Tell us what you need — category, quantity, budget..." required rows="5" style="width:100%;resize:vertical;font-family:'DM Sans',sans-serif;"></textarea>
+        </div>
+        <div id="cf_status" style="font-size:.85rem;display:none;padding:.7rem 1rem;"></div>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center;">
+          <button type="submit" id="cf_btn" style="background:var(--accent);border:none;color:#000;padding:1rem 2.2rem;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;">Send Enquiry →</button>
+          <a href="https://wa.me/918840130533" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:.5rem;background:#25D366;color:#fff;padding:.9rem 1.5rem;font-size:.82rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;text-decoration:none;">💬 WhatsApp Us</a>
+        </div>
+      </form>
+      <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+        <p style="font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem;">Follow Us</p>
+        <div style="display:flex;gap:.7rem;">
+          <a class="social-link" href="https://instagram.com/wholesalebaazar" target="_blank" rel="noopener" title="Instagram">📸</a>
+          <a class="social-link" href="https://facebook.com/wholesalebaazar" target="_blank" rel="noopener" title="Facebook">👍</a>
+          <a class="social-link" href="https://wa.me/918840130533" target="_blank" rel="noopener" title="WhatsApp">💬</a>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p class="section-tag" style="margin-bottom:1rem;">Find Us</p>
+      <div style="border:1px solid var(--border);overflow:hidden;margin-bottom:1.5rem;">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3602.4!2d81.8920!3d25.4538!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sAnwar+Market+Jhunsi+Prayagraj!5e0!3m2!1sen!2sin!4v1" width="100%" height="300" style="border:0;display:block;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Wholesale Baazar Location"></iframe>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);padding:1.5rem;border-left:3px solid var(--accent);">
+        <p style="font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem;">Wholesale Enquiries</p>
+        <p style="font-size:.88rem;line-height:1.7;color:var(--muted);">MOQ starts at <strong style="color:var(--text);">10 pieces per style</strong>. For bulk orders above 50 pieces, call us for special pricing. GST invoices available.</p>
+        <div style="display:flex;gap:2rem;margin-top:1rem;flex-wrap:wrap;">
+          <div><div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--accent);">10+</div><div style="font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;">Min. Order Qty</div></div>
+          <div><div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--accent);">24h</div><div style="font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;">Reply Time</div></div>
+          <div><div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--accent);">PAN India</div><div style="font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;">Delivery</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- DEALER CTA BANNER -->
+  <div style="margin-top:3rem;background:var(--text);color:#fff;padding:2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;">
+    <div>
+      <div style="font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem;">For Resellers & Dealers</div>
+      <div style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;">Become an Authorised Dealer</div>
+      <div style="font-size:.82rem;color:rgba(255,255,255,.7);margin-top:.4rem;">MOQ 10 pcs · Up to 20% dealer discount · GST invoices · PAN India delivery</div>
+    </div>
+    <button onclick="document.getElementById('dealerModal').classList.add('open')" style="background:var(--accent);border:none;color:#000;padding:1rem 2rem;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;white-space:nowrap;">Apply Now →</button>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-column">
+      <h3>Wholesale Baazar</h3>
+      <p>India's trusted manufacturer and wholesale supplier of premium fashion for men, women, and kids since 2015.</p>
+      <div class="social-links">
+        <a class="social-link" href="https://instagram.com/wholesalebaazar" target="_blank" rel="noopener" title="Instagram">📸</a>
+        <a class="social-link" href="https://facebook.com/wholesalebaazar" target="_blank" rel="noopener" title="Facebook">👍</a>
+        <a class="social-link" href="https://wa.me/918840130533" target="_blank" rel="noopener" title="WhatsApp">💬</a>
+      </div>
+    </div>
+    <div class="footer-column">
+      <h3>Policies</h3>
+      <ul>
+        <li><a onclick="openPolicy('return')">Return Policy</a></li>
+        <li><a onclick="openPolicy('shipping')">Shipping Info</a></li>
+        <li><a onclick="openPolicy('privacy')">Privacy Policy</a></li>
+        <li><a onclick="openPolicy('terms')">Terms of Service</a></li>
+      </ul>
+    </div>
+    <div class="footer-column">
+      <h3>Collections</h3>
+      <ul>
+        <li><a onclick="switchSection('men')">Men's Fashion</a></li>
+        <li><a onclick="switchSection('women')">Women's Fashion</a></li>
+        <li><a onclick="switchSection('kids')">Kids' Wear</a></li>
+        <li><a onclick="switchSection('homekitchen')">Home & Kitchen</a></li>
+        <li><a onclick="switchSection('supplements')">Supplements</a></li>
+      </ul>
+    </div>
+    <div class="footer-column">
+      <h3>Contact Us</h3>
+      <div class="contact-info">
+        <div>📧 <a href="mailto:wholesalebazaar.support@gmail.com" style="color:inherit;">wholesalebazaar.support@gmail.com</a></div>
+        <div>📞 +91 88401 30533</div>
+        <div>🕘 Mon–Sat, 9 AM – 8 PM</div>
+        <div>📍 Ground Floor Anwar Market Jhunsi, Prayagraj</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Wholesale Baazar. All rights reserved. · Manufacturer &amp; Wholesale Supplier</p>
+    <div style="display:flex;gap:1.2rem;flex-wrap:wrap;align-items:center;">
+      <a onclick="switchSection('contact')" style="font-size:.75rem;color:var(--accent);cursor:pointer;font-weight:600;">✉ Get in Touch</a>
+      <a href="https://wa.me/918840130533" target="_blank" rel="noopener" style="font-size:.75rem;color:var(--muted);">💬 WhatsApp</a>
+      <a onclick="openPolicy('privacy')" style="font-size:.75rem;color:var(--muted);cursor:pointer;">Privacy Policy</a>
+      <a onclick="openPolicy('terms')" style="font-size:.75rem;color:var(--muted);cursor:pointer;">Terms</a>
+      <a onclick="reopenPrivacyPopup()" style="font-size:.75rem;color:var(--muted);cursor:pointer;">🍪 Cookie Settings</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══ FLOATING BUTTONS ═══ -->
+<button class="back-to-top" id="backToTop" onclick="scrollTop()" title="Back to top">↑</button>
+<button class="chat-fab" id="chatFab" onclick="toggleChat()">💬</button>
+<div class="wa-fab">
+  <div class="wa-popup">
+    <div class="wa-popup-head">
+      <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      <div><div class="wa-popup-head-text">WhatsApp Support</div><div class="wa-popup-head-sub">Typically replies in minutes</div></div>
+    </div>
+    <div class="wa-popup-body">
+      <div class="wa-popup-msg">👋 Hi! How can we help you today? Ask us about products, orders, or bulk pricing!</div>
+      <a class="wa-popup-cta" href="https://wa.me/918840130533?text=Hi%20Wholesale%20Baazar!%20I%20need%20help%20with%20" target="_blank" rel="noopener">💬 Start Chat on WhatsApp</a>
+    </div>
+  </div>
+  <button class="wa-fab-btn" title="Chat on WhatsApp" onclick="window.open('https://wa.me/918840130533?text=Hi%20Wholesale%20Baazar!%20I%20need%20help%20with%20','_blank')">
+    <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </button>
+</div>
+
+<!-- ═══ CHAT PANEL ═══ -->
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-head">
+    <div class="chat-avatar">W</div>
+    <div class="chat-head-info"><div class="chat-head-name">Wholesale Baazar Assistant</div><div class="chat-head-status">● Online</div></div>
+    <button class="chat-close" onclick="toggleChat()">✕</button>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="chat-msg bot">Hey! 👋 I'm your <strong>Wholesale Baazar</strong> assistant – ask me about products, sizes, shipping or bulk pricing!</div>
+  </div>
+  <div class="chat-typing" id="chatTyping">Typing…</div>
+  <div class="chat-input-area">
+    <input class="chat-input" id="chatInput" placeholder="Ask anything…" onkeydown="if(event.key==='Enter')sendChat()">
+    <button class="chat-send" onclick="sendChat()">➤</button>
+  </div>
+</div>
+
+<!-- ═══ CART SIDEBAR ═══ -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-head"><h2>Your Cart</h2><button class="cart-close" onclick="toggleCart()">✕</button></div>
+  <div class="cart-items" id="cartItems"><p class="cart-empty">Your cart is empty.</p></div>
+  <div class="cart-footer">
+    <div class="cart-total">
+      <span class="cart-total-label">Total</span>
+      <span class="cart-total-amount" id="cartTotal">₹0</span>
+    </div>
+    <button class="checkout-btn" onclick="openCheckout()">Proceed to Checkout</button>
+  </div>
+</div>
+
+<!-- ═══ WISHLIST SIDEBAR ═══ -->
+<div class="wishlist-overlay" id="wishlistOverlay" onclick="toggleWishlist()"></div>
+<div class="wishlist-sidebar" id="wishlistSidebar">
+  <div class="wishlist-head"><h2>Your Wishlist</h2><button class="wishlist-close" onclick="toggleWishlist()">✕</button></div>
+  <div class="wishlist-items" id="wishlistItems"><p class="wishlist-empty">Your wishlist is empty.</p></div>
+</div>
+
+<!-- ═══ QUICKVIEW MODAL ═══ -->
+<div class="quickview-modal" id="quickviewModal">
+  <div class="quickview-content">
+    <button class="quickview-close" onclick="closeQuickview()">✕</button>
+    <div class="quickview-image"><img id="qvImg" src="" alt=""></div>
+    <div class="quickview-details">
+      <span class="quickview-badge" id="qvBadge"></span>
+      <div class="quickview-name" id="qvName"></div>
+      <div class="quickview-category" id="qvCategory"></div>
+      <div class="quickview-price" id="qvPrice"></div>
+      <div class="quickview-description" id="qvDesc"></div>
+      <div class="bulk-pricing-box" id="qvBulkPricing"></div>
+      <div>
+        <div class="quickview-label">Select Size</div>
+        <div class="size-selector" id="qvSizes"></div>
+      </div>
+      <div class="quickview-actions">
+        <button class="quickview-add-cart" id="qvAddCart">Add to Cart</button>
+        <button class="btn-secondary" id="qvWishBtn" onclick="qvToggleWishlist()">♡ Wishlist</button>
+        <a id="qvWaShare" href="#" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:.4rem;background:#25D366;color:#fff;padding:.5rem .7rem;font-size:.72rem;font-weight:600;text-decoration:none;" title="Share on WhatsApp">💬 Share</a>
+      </div>
+      <div id="qvReviewsSection"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CHECKOUT MODAL ═══ -->
+<div class="checkout-modal" id="checkoutModal">
+  <div class="checkout-content">
+    <div class="checkout-step active" id="step1">
+      <h3>Your Details</h3>
+      <div class="checkout-form">
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Full Name</label><input class="form-input" id="custName" placeholder="Rahul Sharma"></div>
+          <div class="form-group"><label class="form-label">Phone</label><input class="form-input" id="custPhone" placeholder="+91 9876543210" type="tel"></div>
+        </div>
+        <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="custEmail" placeholder="rahul@email.com" type="email"></div>
+        <div class="form-group"><label class="form-label">Delivery Address</label><input class="form-input" id="custAddr" placeholder="Flat / House No, Street, Area, City"></div>
+        <div class="form-group"><label class="form-label">Pincode</label><input class="form-input" id="custPin" placeholder="400001" maxlength="6" type="tel"></div>
+        <div class="checkout-nav">
+          <button class="btn-cancel" onclick="closeCheckout()">Cancel</button>
+          <button class="btn-primary" onclick="goStep2()">Review Order →</button>
+        </div>
+      </div>
+    </div>
+    <div class="checkout-step" id="step2">
+      <h3>Order Summary</h3>
+      <div class="checkout-summary" id="orderSummaryItems"></div>
+      <p style="margin-top:1.2rem;font-size:.82rem;color:var(--muted)">Choose Payment Method:</p>
+      <div id="paymentOptions" style="display:flex;gap:.8rem;margin-top:.6rem;flex-wrap:wrap;">
+        <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.85rem;padding:.6rem 1rem;border:1px solid var(--border);flex:1;min-width:130px;"><input type="radio" name="payMethod" value="cod" checked> 💵 Cash on Delivery</label>
+        <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.85rem;padding:.6rem 1rem;border:1px solid var(--border);flex:1;min-width:130px;"><input type="radio" name="payMethod" value="razorpay"> 💳 Pay Online (Razorpay)</label>
+      </div>
+      <div class="checkout-nav">
+        <button class="btn-cancel" onclick="document.getElementById('step1').classList.add('active');document.getElementById('step2').classList.remove('active')">← Back</button>
+        <button class="btn-primary" onclick="placeOrder()">Place Order ✓</button>
+      </div>
+    </div>
+    <div class="checkout-step" id="step3">
+      <div class="order-success">
+        <div class="order-success-icon">🎉</div>
+        <h3>Order Placed!</h3>
+        <div class="order-id" id="finalOrderId"></div>
+        <button onclick="copyOrderId()" style="background:none;border:1px solid var(--border);color:var(--muted);padding:.3rem .8rem;font-size:.72rem;cursor:pointer;letter-spacing:.05em;margin-bottom:.8rem;font-family:'DM Sans',sans-serif;">📋 Copy Order ID</button>
+        <p>Thank you for your order. We'll contact you on your phone to confirm delivery. Expected: <strong>3–5 business days</strong>.</p>
+        <div id="postOrderSignin" style="display:none;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);padding:1rem;margin:1.2rem 0;text-align:left;font-size:.82rem;color:var(--muted);line-height:1.7;">
+          <div style="font-weight:600;color:var(--text);margin-bottom:.5rem;">💡 Want to track this order easily?</div>
+          <p style="margin-bottom:.8rem;">Sign in with Google to save your order history — takes 1 tap, totally optional.</p>
+          <button onclick="signInWithGoogle();closeCheckout();" style="display:flex;align-items:center;gap:.6rem;background:#fff;border:1px solid #ddd;padding:.55rem 1rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:500;">
+            <svg viewBox="0 0 48 48" width="18" height="18"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+            Sign in with Google (optional)
+          </button>
+        </div>
+        <div id="postOrderLoggedIn" style="display:none;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--success);padding:1rem;margin:1.2rem 0;text-align:left;font-size:.82rem;color:var(--muted);">✅ <strong style="color:var(--text)">Order saved to your account!</strong> — Track it anytime from the account menu.</div>
+        <div style="margin-top:1rem;display:flex;gap:.8rem;flex-wrap:wrap;justify-content:center;">
+          <button class="btn-primary" onclick="openTrackModal(document.getElementById('finalOrderId').textContent)">🔍 Track This Order</button>
+          <button class="btn-primary" style="background:none;border:1px solid var(--border);color:var(--text);" onclick="closeCheckout()">Continue Shopping</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ORDER TRACKER ═══ -->
+<div class="track-modal-overlay" id="trackModalOverlay" onclick="handleTrackOverlayClick(event)">
+  <div class="track-modal" role="dialog" aria-modal="true" aria-label="Track Your Order">
+    <div class="track-modal-head">
+      <h2>🔍 Track Order</h2>
+      <button class="cart-close" onclick="closeTrackModal()" aria-label="Close">✕</button>
+    </div>
+    <div class="track-modal-body">
+      <div class="track-search-row">
+        <input type="text" id="trackInput" placeholder="Enter Order ID e.g. WB2604-XKP-Q7MR" oninput="this.value=this.value.toUpperCase()">
+        <button onclick="doTrackSearch()">Search</button>
+      </div>
+      <div id="trackAllOrders"></div>
+      <div class="track-result" id="trackResult">
+        <div class="track-not-found" id="trackNotFound" style="display:none">
+          <div style="font-size:2.5rem;margin-bottom:.8rem">📭</div>
+          <p>No order found with that ID.</p>
+          <p style="font-size:.78rem;margin-top:.4rem">Check the ID or <a href="https://wa.me/918840130533" target="_blank" style="color:var(--accent)">WhatsApp us</a>.</p>
+        </div>
+        <div id="trackOrderDetail"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ USER MODAL ═══ -->
+<div class="user-modal-overlay" id="userModalOverlay" onclick="handleUserModalClick(event)">
+  <div class="user-modal" id="userModal">
+    <button class="user-modal-close" onclick="closeUserModal()">✕</button>
+    <div class="user-modal-header">
+      <div class="user-modal-logo">Wholesale Baazar</div>
+      <div class="user-modal-title" id="userModalTitle">Sign In</div>
+      <div class="user-modal-sub" id="userModalSub">Sign in to track your orders</div>
+    </div>
+    <div class="user-modal-body">
+      <div id="panelSignIn">
+        <div style="text-align:center;margin-bottom:1.5rem;">
+          <div style="font-size:2.5rem;margin-bottom:.5rem;">🛍️</div>
+          <p style="font-size:.85rem;color:var(--muted);line-height:1.7;">Sign in with Google to view your order history and track deliveries. No passwords needed!</p>
+        </div>
+        <button class="google-btn" onclick="signInWithGoogle()" style="width:100%">
+          <svg viewBox="0 0 48 48" width="20" height="20"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+          Continue with Google
+        </button>
+        <p style="text-align:center;font-size:.72rem;color:var(--muted);margin-top:1rem;">You can always track orders without signing in using your Order ID.</p>
+      </div>
+      <div class="user-form" id="formProfile">
+        <div style="display:flex;align-items:center;gap:1rem;padding:.8rem;background:var(--surface);border:1px solid var(--border);margin-bottom:.5rem;">
+          <div style="width:48px;height:48px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:#000;flex-shrink:0" id="profileAvatar">R</div>
+          <div><div style="font-weight:600;font-size:.95rem" id="profileName">—</div><div style="font-size:.75rem;color:var(--muted)" id="profileEmail">—</div></div>
+        </div>
+        <div class="form-group"><label class="form-label">Full Name</label><input class="form-input" type="text" id="editName" placeholder="Full Name"></div>
+        <div class="form-group"><label class="form-label">Phone</label><input class="form-input" type="tel" id="editPhone" placeholder="+91 88401 30533"></div>
+        <div class="user-success" id="profileSuccess"></div>
+        <button class="btn-primary" style="width:100%;padding:.85rem" onclick="saveUserProfile()">SAVE CHANGES</button>
+        <button class="btn-secondary" style="width:100%;padding:.75rem;color:#e04;border-color:#e04" onclick="userLogout()">🚪 Logout</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ DEALER REGISTRATION MODAL ═══ -->
+<div class="modal-overlay" id="dealerModal">
+  <div class="modal-box" style="max-width:560px;">
+    <h3 class="modal-title">🤝 Become a Dealer / Reseller</h3>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:1rem;">Join 500+ resellers who source fashion wholesale from Wholesale Baazar. Get exclusive pricing, priority stock and GST invoices.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1rem;">
+      <div style="background:var(--surface);border:1px solid var(--border);padding:.8rem;text-align:center;"><div style="font-size:1.4rem;font-weight:700;font-family:'Playfair Display',serif;color:var(--accent);">10+</div><div style="font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;">Min Order Qty</div></div>
+      <div style="background:var(--surface);border:1px solid var(--border);padding:.8rem;text-align:center;"><div style="font-size:1.4rem;font-weight:700;font-family:'Playfair Display',serif;color:var(--accent);">20%</div><div style="font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;">Dealer Discount</div></div>
+    </div>
+    <div class="form-group"><label class="form-label">Business Name *</label><input class="form-input" id="dl_biz" placeholder="e.g. Sharma Fashion House"></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Contact Name *</label><input class="form-input" id="dl_name" placeholder="Rahul Sharma"></div>
+      <div class="form-group"><label class="form-label">WhatsApp *</label><input class="form-input" id="dl_phone" placeholder="+91 98765 43210" type="tel"></div>
+    </div>
+    <div class="form-group"><label class="form-label">City / State *</label><input class="form-input" id="dl_city" placeholder="e.g. Lucknow, UP"></div>
+    <div class="form-group"><label class="form-label">GSTIN (optional)</label><input class="form-input" id="dl_gst" placeholder="22AAAAA0000A1Z5"></div>
+    <div class="form-group">
+      <label class="form-label">Products Interested In</label>
+      <select class="form-select form-input" id="dl_section">
+        <option value="">Select Category</option><option>Men's Fashion</option><option>Women's Fashion</option><option>Kids Fashion</option><option>Home & Kitchen</option><option>Supplements</option><option>All Categories</option>
+      </select>
+    </div>
+    <div id="dl_status" style="font-size:.82rem;display:none;padding:.6rem .8rem;margin-bottom:.5rem;border-radius:2px;"></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="document.getElementById('dealerModal').classList.remove('open')">Cancel</button>
+      <button class="btn-primary" onclick="submitDealerForm()">Submit Application →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ POLICY MODAL ═══ -->
+<div class="policy-overlay" id="policyOverlay" onclick="handlePolicyOverlayClick(event)">
+  <div class="policy-modal" role="dialog" aria-modal="true" aria-labelledby="policyTitle">
+    <div class="policy-header">
+      <h2 id="policyTitle">Policy</h2>
+      <button class="policy-close" onclick="closePolicy()" aria-label="Close">✕</button>
+    </div>
+    <div class="policy-body" id="policyBody"></div>
+  </div>
+</div>
+
+<!-- ═══ ADMIN OVERLAY ═══ -->
+<div class="admin-overlay" id="adminOverlay">
+  <div class="admin-panel" id="adminPanel">
+    <div class="admin-nav">
+      <div class="admin-logo">Wholesale Baazar — Admin Panel</div>
+      <button class="admin-close" onclick="closeAdmin()">✕ Close</button>
+    </div>
+    <div id="adminLoginWrap" style="padding:2rem">
+      <div class="admin-login">
+        <div class="login-box">
+          <h2 class="login-title">Admin Login</h2>
+          <div class="lockout-notice" id="lockoutNotice">🔒 Too many failed attempts. Try again in <span id="lockoutTimer">15:00</span>.</div>
+          <div class="attempt-counter" id="attemptCounter"></div>
+          <div class="form-group"><label class="form-label">Username</label><input class="form-input" type="text" id="adminUser" autocomplete="off"></div>
+          <div class="form-group"><label class="form-label">Password</label><input class="form-input" type="password" id="adminPass" onkeydown="if(event.key==='Enter')doAdminLogin()" autocomplete="off"></div>
+          <div class="login-error" id="loginError"></div>
+          <button class="btn-primary" style="width:100%;margin-top:.5rem" onclick="doAdminLogin()">LOGIN</button>
+        </div>
+      </div>
+    </div>
+    <div id="adminDash" style="display:none">
+      <div class="admin-tabs">
+        <button class="admin-tab active" onclick="switchAdminTab('dashboard',this)">Dashboard</button>
+        <button class="admin-tab" onclick="switchAdminTab('products',this)">Products</button>
+        <button class="admin-tab" onclick="switchAdminTab('orders',this)">Orders</button>
+        <button class="admin-tab" onclick="switchAdminTab('customers',this)">Customers</button>
+        <button class="admin-tab" onclick="switchAdminTab('slideshow',this)">Slideshow</button>
+        <button class="admin-tab" onclick="switchAdminTab('settings',this)">Settings</button>
+        <button class="admin-tab" onclick="switchAdminTab('account',this)">🔐 Account</button>
+      </div>
+      <div class="admin-content">
+        <div class="admin-section active" id="tab-dashboard">
+          <div class="stats-grid" id="dash-stats-row"></div>
+          <h3 class="admin-section-title" style="margin-bottom:1rem">Quick Actions</h3>
+          <div style="display:flex;gap:.8rem;flex-wrap:wrap">
+            <button class="btn-primary" onclick="openProductModal()">+ Add Product</button>
+            <button class="btn-secondary" onclick="switchAdminTab('orders',document.querySelectorAll('.admin-tab')[2])">View Orders</button>
+          </div>
+        </div>
+        <div class="admin-section" id="tab-products">
+          <div class="admin-toolbar">
+            <h3 class="admin-section-title">All Products (<span id="productCount"></span>)</h3>
+            <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+              <button class="btn-secondary" onclick="exportProductsToCSV()">Export CSV</button>
+              <button class="btn-primary" onclick="openProductModal()">+ Add Product</button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="admin-table">
+              <thead><tr><th><input type="checkbox" id="selectAll" onchange="toggleSelectAll(this)"></th><th>Image</th><th>Name</th><th>Section</th><th>Category</th><th>Price</th><th>Actions</th></tr></thead>
+              <tbody id="adminProductsTbody"></tbody>
+            </table>
+          </div>
+          <button class="btn-secondary" onclick="deleteSelectedProducts()" style="margin-top:1rem">Delete Selected</button>
+        </div>
+        <div class="admin-section" id="tab-orders">
+          <div class="admin-toolbar">
+            <h3 class="admin-section-title">Order History</h3>
+            <button class="btn-secondary" onclick="exportOrdersToCSV()">Export CSV</button>
+          </div>
+          <div class="table-wrap">
+            <table class="admin-table">
+              <thead><tr><th>Order ID</th><th>Customer</th><th>Items</th><th>Total</th><th>Date</th><th>Status</th></tr></thead>
+              <tbody id="ordersTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="admin-section" id="tab-customers">
+          <h3 class="admin-section-title" style="margin-bottom:1.5rem">Customer List</h3>
+          <div class="table-wrap">
+            <table class="admin-table">
+              <thead><tr><th>Name</th><th>Email</th><th>Phone</th></tr></thead>
+              <tbody id="customersTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="admin-section" id="tab-slideshow">
+          <h3 class="admin-section-title" style="margin-bottom:1.5rem">Hero Slideshow</h3>
+          <p style="font-size:.82rem;color:var(--muted);margin-bottom:1.5rem">Manage background images on the homepage hero. Use Unsplash URLs for best quality.</p>
+          <div class="slides-list" id="slidesAdminList"></div>
+          <h4 style="font-family:'Playfair Display',serif;margin-bottom:1rem">Add New Slide</h4>
+          <div class="slide-add-form">
+            <div class="form-group"><label class="form-label">Image URL</label><input class="form-input" id="newSlideUrl" placeholder="https://images.unsplash.com/photo-..."></div>
+            <div class="form-group"><label class="form-label">Caption (optional)</label><input class="form-input" id="newSlideCaption" placeholder="e.g. New Arrivals 2026"></div>
+            <button class="btn-primary" style="align-self:flex-start" onclick="addSlide()">+ Add Slide</button>
+          </div>
+        </div>
+        <div class="admin-section" id="tab-settings">
+          <h3 class="admin-section-title" style="margin-bottom:1.5rem">Store Settings</h3>
+          <div style="display:flex;flex-direction:column;gap:1.2rem;max-width:480px">
+            <div class="form-group"><label class="form-label">Store Name</label><input class="form-input" id="storeName"></div>
+            <div class="form-group"><label class="form-label">Contact Email</label><input class="form-input" id="contactEmail"></div>
+            <div class="form-group"><label class="form-label">Phone</label><input class="form-input" id="contactPhone"></div>
+            <div class="form-group"><label class="form-label">Free Shipping Threshold (₹)</label><input class="form-input" type="number" id="freeShippingThreshold" placeholder="999"></div>
+            <button class="btn-primary" style="align-self:flex-start" onclick="saveSettings()">Save Settings</button>
+          </div>
+        </div>
+        <div class="admin-section" id="tab-account">
+          <h3 class="admin-section-title" style="margin-bottom:.4rem">Account & Security</h3>
+          <p style="font-size:.82rem;color:var(--muted);margin-bottom:2rem">Manage your admin login credentials. Changes take effect immediately.</p>
+          <div class="account-info-card">
+            <div class="account-info-row"><span class="account-info-label">👤 Current Username</span><span class="account-info-value" id="displayCurrentUser">—</span></div>
+            <div class="account-info-row"><span class="account-info-label">🔑 Password</span><span class="account-info-value">••••••••</span></div>
+          </div>
+          <div class="account-panels">
+            <div class="account-panel">
+              <div class="account-panel-header"><span class="account-panel-icon">👤</span><div><div class="account-panel-title">Change Username</div><div class="account-panel-sub">Update your admin login username</div></div></div>
+              <div style="display:flex;flex-direction:column;gap:1rem">
+                <div class="form-group"><label class="form-label">Current Password *</label><input class="form-input" type="password" id="verifyPassForUser" placeholder="Enter current password"></div>
+                <div class="form-group"><label class="form-label">New Username</label><input class="form-input" type="text" id="newAdminUser" placeholder="e.g. storeadmin"></div>
+                <div class="account-msg" id="userMsg"></div>
+                <button class="btn-primary" style="align-self:flex-start" onclick="saveAdminUsername()">Update Username</button>
+              </div>
+            </div>
+            <div class="account-panel">
+              <div class="account-panel-header"><span class="account-panel-icon">🔑</span><div><div class="account-panel-title">Change Password</div><div class="account-panel-sub">Choose a strong, unique password</div></div></div>
+              <div style="display:flex;flex-direction:column;gap:1rem">
+                <div class="form-group"><label class="form-label">Current Password</label><input class="form-input" type="password" id="currentPassInput" placeholder="Enter your current password"></div>
+                <div class="form-group"><label class="form-label">New Password</label><input class="form-input" type="password" id="newPassInput" placeholder="Min. 8 characters" oninput="checkPassStrength(this.value)"><div class="pass-strength-bar"><div class="pass-strength-fill" id="passStrengthFill"></div></div><div class="pass-strength-label" id="passStrengthLabel"></div></div>
+                <div class="form-group"><label class="form-label">Confirm New Password</label><input class="form-input" type="password" id="confirmPassInput" placeholder="Re-enter new password"></div>
+                <div class="account-msg" id="passMsg"></div>
+                <button class="btn-primary" style="align-self:flex-start" onclick="saveAdminPassword()">Update Password</button>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--border);display:flex;gap:.8rem;align-items:center;flex-wrap:wrap">
+            <button class="btn-secondary" onclick="adminLogout()" style="color:#e04;border-color:#e04">🚪 Logout</button>
+            <span style="font-size:.75rem;color:var(--muted)">Closes the admin panel and requires re-login to access.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PRODUCT ADD/EDIT MODAL ═══ -->
+<div class="modal-overlay" id="productModal">
+  <div class="modal-box">
+    <h3 class="modal-title" id="modalTitle">Add Product</h3>
+    <div class="form-group"><label class="form-label">Product Name</label><input class="form-input" id="pName" placeholder="e.g. Classic Oxford Shirt"></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Section</label><select class="form-select form-input" id="pSection"><option value="men">Men</option><option value="women">Women</option><option value="kids">Kids</option><option value="homekitchen">Home & Kitchen</option><option value="supplements">Supplements</option></select></div>
+      <div class="form-group"><label class="form-label">Category</label><input class="form-input" id="pCategory" placeholder="e.g. Shirts"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Price (₹)</label><input class="form-input" id="pPrice" type="number" placeholder="1299"></div>
+      <div class="form-group"><label class="form-label">Badge</label><input class="form-input" id="pBadge" placeholder="NEW / SALE / HOT"></div>
+    </div>
+    <div class="form-group"><label class="form-label">Image URL</label><input class="form-input" id="pImg" placeholder="https://images.unsplash.com/…" oninput="updateImgPreview(this.value)"><img class="img-preview" id="imgPreview" src="" alt="Preview"></div>
+    <div class="form-group"><label class="form-label">Description</label><input class="form-input" id="pDesc" placeholder="One-line product description"></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeProductModal()">Cancel</button>
+      <button class="btn-primary" onclick="saveProduct()">Save Product</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TOAST ═══ -->
+<div class="toast" id="toast"></div>
+
+<!-- ═══ SCRIPTS (order matters) ═══ -->
+<script src="/assets/js/data.js"></script>
+<script src="/assets/js/reviews.js"></script>
+<script src="/assets/js/cart.js"></script>
+<script src="/assets/js/chat.js"></script>
+<script src="/assets/js/admin.js"></script>
+<script src="/assets/js/app.js"></script>
+
+</body>
+</html>
