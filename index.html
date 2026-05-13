@@ -23,9 +23,6 @@
 -->
 <html lang="en">
 <head>
-  <!-- AOS - Animate On Scroll Library -->
-<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -171,14 +168,8 @@
 
 <!-- ═══ STYLES ═══ -->
 <link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/product-page.css">
 </head>
-  <script>
-  AOS.init({
-    duration: 800,
-    easing: 'slide',
-    once: true
-  });
-</script>
 <body>
 
 <!-- SKIP NAV (Accessibility) -->
@@ -537,6 +528,71 @@
       <div style="font-size:.82rem;color:rgba(255,255,255,.7);margin-top:.4rem;">MOQ 10 pcs · Up to 20% dealer discount · GST invoices · PAN India delivery</div>
     </div>
     <button onclick="document.getElementById('dealerModal').classList.add('open')" style="background:var(--accent);border:none;color:#000;padding:1rem 2rem;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;white-space:nowrap;">Apply Now →</button>
+  </div>
+</div>
+
+<!-- ═══ ANIMATED VIDEO SECTION (rendered by VideoShowcase.jsx logic inline) ═══ -->
+<div id="videoShowcaseRoot">
+  <!-- TICKER STRIP -->
+  <div class="collection-strip">
+    <div class="strip-track" id="stripTrack">
+      <span class="strip-item">New Arrivals 2026<span class="strip-dot">✦</span></span>
+      <span class="strip-item">Free Shipping ₹999+<span class="strip-dot">✦</span></span>
+      <span class="strip-item">COD Available<span class="strip-dot">✦</span></span>
+      <span class="strip-item">MOQ 10 Pcs<span class="strip-dot">✦</span></span>
+      <span class="strip-item">Wholesale Discounts<span class="strip-dot">✦</span></span>
+      <span class="strip-item">7-Day Returns<span class="strip-dot">✦</span></span>
+      <span class="strip-item">PAN India Delivery<span class="strip-dot">✦</span></span>
+      <span class="strip-item">GST Invoices<span class="strip-dot">✦</span></span>
+      <!-- duplicate for seamless loop -->
+      <span class="strip-item">New Arrivals 2026<span class="strip-dot">✦</span></span>
+      <span class="strip-item">Free Shipping ₹999+<span class="strip-dot">✦</span></span>
+      <span class="strip-item">COD Available<span class="strip-dot">✦</span></span>
+      <span class="strip-item">MOQ 10 Pcs<span class="strip-dot">✦</span></span>
+      <span class="strip-item">Wholesale Discounts<span class="strip-dot">✦</span></span>
+      <span class="strip-item">7-Day Returns<span class="strip-dot">✦</span></span>
+      <span class="strip-item">PAN India Delivery<span class="strip-dot">✦</span></span>
+      <span class="strip-item">GST Invoices<span class="strip-dot">✦</span></span>
+    </div>
+  </div>
+
+  <!-- DARK VIDEO SECTION -->
+  <div class="video-section" id="mainVideoSection">
+    <div style="position:absolute;top:20%;left:15%;width:300px;height:300px;background:rgba(255,153,0,.06);border-radius:50%;filter:blur(60px);pointer-events:none;"></div>
+    <div style="position:absolute;bottom:20%;right:15%;width:250px;height:250px;background:rgba(233,30,99,.05);border-radius:50%;filter:blur(50px);pointer-events:none;"></div>
+    <div class="video-section-eyebrow">✦ Wholesale Baazar Collections ✦</div>
+    <h2 class="video-section-title">Shop Our <em style="color:var(--accent);font-style:italic;">Latest</em> Looks</h2>
+    <p class="video-section-sub">Browse trending styles in Men, Women & Kids fashion — delivered PAN India with wholesale prices.</p>
+    <!-- Category Pills -->
+    <div style="display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;margin-bottom:2.5rem;" id="catPillsRow"></div>
+    <!-- Video Cards -->
+    <div class="video-cards-row" id="videoCardsRow"></div>
+    <!-- CTA -->
+    <div style="margin-top:2.8rem;">
+      <button onclick="switchSection('women')" style="background:var(--accent);border:none;color:#000;padding:.95rem 2.5rem;font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;box-shadow:0 6px 28px rgba(255,153,0,.35);transition:.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+        Shop All Collections →
+      </button>
+    </div>
+  </div>
+
+  <!-- STATS BAR -->
+  <div style="background:#1a1a1a;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08);padding:2.5rem 2rem;">
+    <div style="display:flex;justify-content:center;flex-wrap:wrap;gap:3rem;max-width:900px;margin:0 auto;" id="statsRow"></div>
+  </div>
+
+  <!-- FEATURE STRIP -->
+  <div style="background:var(--accent);padding:1.8rem 2rem;display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;">
+    <div style="display:flex;align-items:center;gap:.5rem;font-size:.82rem;font-weight:700;color:#000;">🚚 Free Delivery on ₹999+</div>
+    <span style="color:rgba(0,0,0,.3);">|</span>
+    <div style="display:flex;align-items:center;gap:.5rem;font-size:.82rem;font-weight:700;color:#000;">💵 Cash on Delivery</div>
+    <span style="color:rgba(0,0,0,.3);">|</span>
+    <div style="display:flex;align-items:center;gap:.5rem;font-size:.82rem;font-weight:700;color:#000;">↩ 7-Day Easy Returns</div>
+    <span style="color:rgba(0,0,0,.3);">|</span>
+    <div style="display:flex;align-items:center;gap:.5rem;font-size:.82rem;font-weight:700;color:#000;">🏭 Direct from Manufacturer</div>
+    <span style="color:rgba(0,0,0,.3);">|</span>
+    <div style="display:flex;align-items:center;gap:.5rem;font-size:.82rem;font-weight:700;color:#000;">📦 MOQ 10 Pieces</div>
+    <span style="color:rgba(0,0,0,.3);">|</span>
+    <div style="display:flex;align-items:center;gap:.5rem;font-size:.82rem;font-weight:700;color:#000;">🧾 GST Invoice Available</div>
   </div>
 </div>
 
